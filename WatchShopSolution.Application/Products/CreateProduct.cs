@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using WatchShopSolution.Database;
 using WatchShopSolution.Domain.Models;
 
@@ -13,15 +14,19 @@ namespace WatchShopSolution.Application.Products
         {
             _context = context;
         }
-        public void Create(int id,string name, string description)
+
+
+        // truyền vào 1 product viewmodel và tạo mới 
+        // = namespace WatchShopSolution.Application.ViewModels
+        public async Task Create(ViewModels.ProductViewModel productViewModel)
         {
             _context.Products.Add(new Product
             {
-                Id = id,
-                Description = description,
-                Name = name
-
+                Name = productViewModel.Name,
+                Description = productViewModel.Description,
+                Value = productViewModel.Value
             });
-        }
+            await _context.SaveChangesAsync();
+        }   
     }
 }
